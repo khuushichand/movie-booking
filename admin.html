@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - CineBook</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px var(--shadow-color);
+    }
+
+    .admin-form .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .admin-form .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .admin-form .form-input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .admin-form .form-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
+    }
+
+    .message {
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      display: none;
+      font-weight: 500;
+    }
+
+    .message.success {
+      background: rgba(46, 213, 115, 0.15);
+      color: #2ed573;
+      border: 1px solid rgba(46, 213, 115, 0.3);
+    }
+
+    .message.error {
+      background: rgba(255, 71, 87, 0.15);
+      color: #ff4757;
+      border: 1px solid rgba(255, 71, 87, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="global-video-bg">
+    <video autoplay muted loop playsinline id="themeVideo">
+      <source src="images/light.mp4" type="video/mp4">
+    </video>
+  </div>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="movies.html" class="navbar-brand">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
+      </svg>
+      <span>CineBook Admin</span>
+    </a>
+
+    <div class="navbar-nav">
+      <a href="movies.html" class="nav-link">Movies</a>
+      <a href="dashboard.html" class="nav-link">My Bookings</a>
+    </div>
+  </nav>
+
+  <!-- Admin Page -->
+  <main class="movies-page">
+    <div class="movies-header">
+      <h1 class="movies-title">Upload New Movie</h1>
+      <p class="movies-subtitle">Add movies to the database dynamically</p>
+    </div>
+
+    <div class="admin-container fade-in">
+      <div id="statusMessage" class="message"></div>
+
+      <form id="addMovieForm" class="admin-form">
+        <div class="form-group">
+          <label class="form-label" for="title">Movie Title</label>
+          <input type="text" id="title" class="form-input" required placeholder="e.g., The Matrix">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="description">Description</label>
+          <textarea id="description" class="form-input" required rows="3"
+            placeholder="Enter movie description..."></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="genre">Genre (comma separated)</label>
+            <input type="text" id="genre" class="form-input" required placeholder="e.g., Action, Sci-Fi">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="language">Language</label>
+            <input type="text" id="language" class="form-input" required placeholder="e.g., English, Hindi">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="duration">Duration (mins)</label>
+            <input type="number" id="duration" class="form-input" required placeholder="e.g., 136">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="rating">Rating (0-10)</label>
+            <input type="number" id="rating" step="0.1" min="0" max="10" class="form-input" required
+              placeholder="e.g., 8.7">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="price">Ticket Price (Rs.)</label>
+            <input type="number" id="price" class="form-input" required placeholder="e.g., 150">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="releaseDate">Release Date</label>
+            <input type="date" id="releaseDate" class="form-input" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="posterUrl">Poster Image URL (Optional)</label>
+          <input type="url" id="posterUrl" class="form-input" placeholder="https://example.com/poster.jpg">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="image">OR Upload Local Poster</label>
+          <input type="file" id="image" class="form-input" accept="image/*">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 1rem;"
+          id="submitBtn">
+          Save Movie to Database
+        </button>
+      </form>
+    </div>
+
+    <div class="movies-header" style="margin-top: 4rem;">
+      <h2 class="movies-title">Manage Movies</h2>
+      <p class="movies-subtitle">View and delete existing movies from the database</p>
+    </div>
+
+    <div class="admin-container fade-in">
+      <div id="adminMoviesList" style="display: flex; flex-direction: column; gap: 1rem;">
+        <p style="color: var(--text-secondary); text-align: center;">Loading movies...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Script to handle form submission -->
+  <script>
+    document.getElementById('addMovieForm').addEventListener('submit', async (e) => {
+      e.preventDefault(); // Prevent page reload
+
+      const submitBtn = document.getElementById('submitBtn');
+      const statusMsg = document.getElementById('statusMessage');
+
+      // Show loading state
+      submitBtn.textContent = 'Uploading...';
+      submitBtn.disabled = true;
+      statusMsg.style.display = 'none';
+
+      // Gather form data
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const genreInput = document.getElementById('genre').value;
+      const genre = genreInput.split(',').map(g => g.trim()); // Convert to array
+      const language = document.getElementById('language').value;
+      const duration = Number(document.getElementById('duration').value);
+      const rating = Number(document.getElementById('rating').value);
+      const price = Number(document.getElementById('price').value);
+      const releaseDate = document.getElementById('releaseDate').value;
+      const posterUrlInput = document.getElementById('posterUrl').value;
+      const imageFile = document.getElementById('image').files[0];
+
+      let finalPosterUrl = posterUrlInput;
+
+      if (!imageFile && !posterUrlInput) {
+        statusMsg.textContent = '❌ Please provide either an image URL or upload a file.';
+        statusMsg.className = 'message error';
+        statusMsg.style.display = 'block';
+        submitBtn.textContent = 'Save Movie to Database';
+        submitBtn.disabled = false;
+        return;
+      }
+
+      // Upload image first
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        try {
+          const uploadRes = await fetch('http://localhost:5000/api/upload', {
+            method: 'POST',
+            body: formData,
+          });
+          const uploadData = await uploadRes.json();
+          if (uploadRes.ok) {
+            finalPosterUrl = uploadData.image;
+          } else {
+            throw new Error(uploadData.message || 'Image upload failed');
+          }
+        } catch (error) {
+          console.error('Upload Error:', error);
+          statusMsg.textContent = '❌ ' + error.message;
+          statusMsg.className = 'message error';
+          statusMsg.style.display = 'block';
+          submitBtn.textContent = 'Save Movie to Database';
+          submitBtn.disabled = false;
+          return;
+        }
+      }
+
+      // Prepare payload
+      const movieData = {
+        title,
+        description,
+        genre,
+        duration,
+        language,
+        rating,
+        price,
+        releaseDate,
+        poster: finalPosterUrl
+      };
+
+      // Retrieve state for JWT token
+      let token = '';
+      const stateStr = localStorage.getItem('cinebookState');
+      if (stateStr) {
+        const parsedState = JSON.parse(stateStr);
+        if (parsedState && parsedState.user && parsedState.user.token) {
+          token = parsedState.user.token;
+        }
+      }
+
+      try {
+        // Send to backend API
+        const response = await fetch('http://localhost:5000/api/movies', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify(movieData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Success
+          statusMsg.textContent = '✅ Movie successfully added to the database!';
+          statusMsg.className = 'message success';
+          statusMsg.style.display = 'block';
+
+          // Clear the form
+          document.getElementById('addMovieForm').reset();
+
+          // Refresh the manage movies list automatically
+          if (typeof fetchMovies === 'function') {
+            await fetchMovies();
+            if (typeof renderAdminMovies === 'function') renderAdminMovies();
+          }
+        } else {
+          // Backend returned an error
+          throw new Error(data.message || 'Failed to upload movie');
+        }
+      } catch (error) {
+        // Network error or thrown error
+        console.error('Upload Error:', error);
+        statusMsg.textContent = '❌ ' + error.message;
+        statusMsg.className = 'message error';
+        statusMsg.style.display = 'block';
+      } finally {
+        // Re-enable button
+        submitBtn.textContent = 'Save Movie to Database';
+        submitBtn.disabled = false;
+
+        // Hide message after 5 seconds
+        setTimeout(() => {
+          statusMsg.style.display = 'none';
+        }, 5000);
+      }
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+
+</html>
