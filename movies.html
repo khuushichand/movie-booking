@@ -1,3 +1,6 @@
+<!-- movies.html - Movie browsing and selection page -->
+<!-- Purpose: Displays available movies with search/filter functionality, allows users to select movies for booking -->
+<!-- Features: Dynamic movie grid, search by title, filter by genre/language, responsive design -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,13 +12,14 @@
 </head>
 
 <body>
+  <!-- Global video background that changes based on theme -->
   <div class="global-video-bg">
     <video autoplay muted loop playsinline id="themeVideo">
       <source src="images/light.mp4" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
   </div>
-  <!-- Navigation -->
+  <!-- Navigation bar with CineBook branding -->
   <nav class="navbar">
     <a href="movies.html" class="navbar-brand">
       <svg viewBox="0 0 24 24" fill="currentColor">
@@ -25,12 +29,15 @@
       <span>CineBook</span>
     </a>
 
+    <!-- Main navigation links -->
     <div class="navbar-nav">
       <a href="movies.html" class="nav-link active">Movies</a>
       <a href="dashboard.html" class="nav-link">My Bookings</a>
     </div>
 
+    <!-- Right side navbar controls -->
     <div class="navbar-right">
+      <!-- Theme toggle button (sun/moon icons) -->
       <button class="theme-toggle" id="themeToggle" title="Toggle theme">
         <svg class="sun-icon" viewBox="0 0 24 24">
           <path
@@ -42,6 +49,7 @@
         </svg>
       </button>
 
+      <!-- User profile dropdown menu -->
       <div class="profile-container">
         <button class="profile-btn" id="profileBtn">
           <svg viewBox="0 0 24 24">
@@ -76,14 +84,17 @@
     </div>
   </nav>
 
-  <!-- Movies Page -->
+  <!-- Main content area for movies page -->
   <main class="movies-page">
+    <!-- Page header with title and subtitle -->
     <div class="movies-header">
       <h1 class="movies-title">Now Showing</h1>
       <p class="movies-subtitle">Book your tickets for the latest movies</p>
     </div>
 
+    <!-- Search and filter controls -->
     <div class="search-filter-container">
+      <!-- Search input with magnifying glass icon -->
       <div class="search-bar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
           stroke-linejoin="round">
@@ -92,6 +103,7 @@
         </svg>
         <input type="text" id="searchInput" placeholder="Search movies by title...">
       </div>
+      <!-- Filter dropdowns for genre and language -->
       <div class="filter-group">
         <select id="genreFilter" class="filter-dropdown">
           <option value="all">All Genres</option>
@@ -102,13 +114,16 @@
       </div>
     </div>
 
+    <!-- Movies display container -->
     <div class="movies-container">
+      <!-- Grid layout for movie cards - populated dynamically by JavaScript -->
       <div class="movies-grid" id="moviesGrid">
         <!-- Movies will be populated by JavaScript -->
       </div>
     </div>
   </main>
 
+  <!-- Load main JavaScript file for movie functionality -->
   <script src="script.js"></script>
 </body>
 

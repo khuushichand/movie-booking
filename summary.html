@@ -1,3 +1,6 @@
+<!-- summary.html - Booking summary and confirmation page -->
+<!-- Purpose: Displays complete booking details before final confirmation, allows users to review their selections -->
+<!-- Features: Movie poster, show details, seat selection summary, pricing breakdown, confirmation button -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,13 +12,14 @@
 </head>
 
 <body>
+  <!-- Global video background that changes with theme -->
   <div class="global-video-bg">
     <video autoplay muted loop playsinline id="themeVideo">
       <source src="images/light.mp4" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
   </div>
-  <!-- Navigation -->
+  <!-- Navigation bar -->
   <nav class="navbar">
     <a href="movies.html" class="navbar-brand">
       <svg viewBox="0 0 24 24" fill="currentColor">
@@ -31,6 +35,7 @@
     </div>
 
     <div class="navbar-right">
+      <!-- Theme toggle button -->
       <button class="theme-toggle" id="themeToggle" title="Toggle theme">
         <svg class="sun-icon" viewBox="0 0 24 24">
           <path
@@ -42,6 +47,7 @@
         </svg>
       </button>
 
+      <!-- User profile dropdown -->
       <div class="profile-container">
         <button class="profile-btn" id="profileBtn">
           <svg viewBox="0 0 24 24">
@@ -76,15 +82,17 @@
     </div>
   </nav>
 
-  <!-- Summary Page -->
+  <!-- Main summary page content -->
   <main class="summary-page">
     <div class="summary-container">
+      <!-- Summary card with slide-up animation -->
       <div class="summary-card slide-up">
         <div class="summary-header">
           <h2>Booking Summary</h2>
           <p>Review your booking details</p>
         </div>
 
+        <!-- Movie information section with poster -->
         <div class="summary-movie">
           <div class="summary-poster">
             <img id="summaryPoster" src="https://via.placeholder.com/120x180/1a1a2e/ffffff?text=Movie"
@@ -98,6 +106,7 @@
           </div>
         </div>
 
+        <!-- Booking details breakdown -->
         <div class="summary-item">
           <span class="summary-item-label">Selected Seats</span>
           <span class="summary-item-value" id="summarySeats">-</span>
@@ -113,12 +122,14 @@
           <span class="summary-item-value" id="summaryPricePerTicket">Rs.150.00</span>
         </div>
 
+        <!-- Total amount row -->
         <div class="summary-total-row">
           <span class="summary-total-label">Total Amount</span>
           <span class="summary-total-value" id="summaryTotal">Rs.0.00</span>
         </div>
       </div>
 
+      <!-- Action buttons for navigation -->
       <div class="summary-actions">
         <a href="seats.html" class="btn btn-secondary">Back to Seats</a>
         <a href="ticket.html" class="btn btn-primary" id="confirmBtn">Confirm Booking</a>
@@ -126,6 +137,7 @@
     </div>
   </main>
 
+  <!-- Load main JavaScript for summary functionality -->
   <script src="script.js"></script>
 </body>
 

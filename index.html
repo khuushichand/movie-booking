@@ -1,3 +1,6 @@
+<!-- index.html - Main authentication page for CineBook movie booking app -->
+<!-- Purpose: Handles user login and registration with role selection (user/admin) -->
+<!-- Features: Video background, form validation, theme support, responsive design -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,42 +10,53 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Main authentication page container -->
   <div class="auth-page">
-    <!-- Video Background -->
+    <!-- Video Background - Full-screen looping video for cinematic effect -->
     <video class="video-bg" autoplay loop muted playsinline>
       <source src="images/bg.mp4.mp4" type="video/mp4">
     </video>
-    <!-- Dark Overlay -->
+    <!-- Dark Overlay - Semi-transparent overlay to improve text readability -->
     <div class="video-overlay"></div>
     
+    <!-- Authentication form container with slide-up animation -->
     <div class="auth-container slide-up">
+      <!-- Header section with logo and title -->
       <div class="auth-header">
         <div class="auth-logo">
+          <!-- CineBook logo with checkmark icon -->
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
           </svg>
           <span>CineBook</span>
         </div>
+        <!-- Dynamic title that changes between login/signup -->
         <h1 class="auth-title" id="authTitle">Welcome Back</h1>
+        <!-- Dynamic subtitle for additional context -->
         <p class="auth-subtitle" id="authSubtitle">Sign in to book your favorite movies</p>
       </div>
 
+      <!-- Authentication form - handles both login and registration -->
       <form class="auth-form" id="authForm">
+        <!-- Full name field - only shown during registration -->
         <div class="form-group" id="nameGroup" style="display: none;">
           <label class="form-label" for="name">Full Name</label>
           <input type="text" class="form-input" id="name" placeholder="Enter your full name">
         </div>
 
+        <!-- Email field - required for both login and signup -->
         <div class="form-group">
           <label class="form-label" for="email">Email Address</label>
           <input type="email" class="form-input" id="email" placeholder="Enter your email" required>
         </div>
 
+        <!-- Password field - required for both login and signup -->
         <div class="form-group">
           <label class="form-label" for="password">Password</label>
           <input type="password" class="form-input" id="password" placeholder="Enter your password" required>
         </div>
 
+        <!-- Role selection - allows choosing between user and admin login -->
         <div class="form-group" id="roleGroup">
           <label class="form-label" for="role">Login As</label>
           <select class="form-input" id="role" style="background: var(--bg-primary); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-primary); cursor: pointer; padding: 0.8rem 1rem; border-radius: 8px;">
@@ -51,6 +65,7 @@
           </select>
         </div>
 
+        <!-- Remember me and forgot password - only shown during login -->
         <div class="remember-forgot" id="rememberForgot" style="display: flex;">
           <label class="remember-me">
             <input type="checkbox" id="remember">
@@ -59,11 +74,13 @@
           <a href="#" class="forgot-link">Forgot password?</a>
         </div>
 
+        <!-- Submit button - text changes between "Sign In" and "Sign Up" -->
         <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" id="authBtn">
           Sign In
         </button>
       </form>
 
+      <!-- Toggle link to switch between login and signup modes -->
       <p class="auth-toggle">
         <span id="toggleText">Don't have an account?</span>
         <a href="#" id="toggleAuth">Sign Up</a>
@@ -71,6 +88,7 @@
     </div>
   </div>
 
+  <!-- Load main JavaScript file for authentication logic -->
   <script src="script.js"></script>
 </body>
 </html>

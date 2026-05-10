@@ -1,17 +1,24 @@
+/*
+This file contains controller functions for managing theatres in the booking system.
+It provides basic CRUD operations for theatre data.
+*/
+
 const asyncHandler = require('express-async-handler');
 const Theatre = require('../models/Theatre');
 
-// @desc    Get all theatres
-// @route   GET /api/theatres
-// @access  Public
+// Controller to get all theatres
+// Route: GET /api/theatres
+// Access: Public
+// Returns: Array of all theatre objects
 const getTheatres = asyncHandler(async (req, res) => {
   const theatres = await Theatre.find();
   res.status(200).json(theatres);
 });
 
-// @desc    Get single theatre
-// @route   GET /api/theatres/:id
-// @access  Public
+// Controller to get a single theatre by ID
+// Route: GET /api/theatres/:id
+// Access: Public
+// Returns: Single theatre object
 const getTheatre = asyncHandler(async (req, res) => {
   const theatre = await Theatre.findById(req.params.id);
 
@@ -23,17 +30,21 @@ const getTheatre = asyncHandler(async (req, res) => {
   res.status(200).json(theatre);
 });
 
-// @desc    Create theatre
-// @route   POST /api/theatres
-// @access  Private/Admin
+// Controller to create a new theatre
+// Route: POST /api/theatres
+// Access: Private/Admin
+// Expects: Theatre data in request body (name, location, totalSeats)
+// Returns: Created theatre object
 const createTheatre = asyncHandler(async (req, res) => {
   const theatre = await Theatre.create(req.body);
   res.status(201).json(theatre);
 });
 
-// @desc    Update theatre
-// @route   PUT /api/theatres/:id
-// @access  Private/Admin
+// Controller to update an existing theatre
+// Route: PUT /api/theatres/:id
+// Access: Private/Admin
+// Expects: Updated theatre data in request body
+// Returns: Updated theatre object
 const updateTheatre = asyncHandler(async (req, res) => {
   const theatre = await Theatre.findById(req.params.id);
 
@@ -46,16 +57,17 @@ const updateTheatre = asyncHandler(async (req, res) => {
     req.params.id,
     req.body,
     {
-      new: true,
+      new: true, // Return the updated document
     }
   );
 
   res.status(200).json(updatedTheatre);
 });
 
-// @desc    Delete theatre
-// @route   DELETE /api/theatres/:id
-// @access  Private/Admin
+// Controller to delete a theatre
+// Route: DELETE /api/theatres/:id
+// Access: Private/Admin
+// Returns: Success message with deleted theatre ID
 const deleteTheatre = asyncHandler(async (req, res) => {
   const theatre = await Theatre.findById(req.params.id);
 
@@ -69,6 +81,7 @@ const deleteTheatre = asyncHandler(async (req, res) => {
   res.status(200).json({ id: req.params.id, message: 'Theatre deleted' });
 });
 
+// Export all controller functions
 module.exports = {
   getTheatres,
   getTheatre,
