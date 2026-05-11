@@ -1,11 +1,11 @@
 /*
-This file contains the frontend JavaScript code for the Cinebook movie booking website.
+This file contains the frontend JavaScript code for the PixieSpark movie booking website.
 It handles user authentication, movie browsing, seat selection, booking, and admin functions.
 The code manages application state, API calls, and UI updates.
 */
 
 // ============================================
-// CINEBOOK - MOVIE TICKET BOOKING WEBSITE
+// PIXIESPARK - MOVIE TICKET BOOKING WEBSITE
 // ============================================
 
 const API_BASE = 'http://localhost:5000/api';
@@ -23,9 +23,9 @@ let state = {
 };
 
 // Utility: Save/load state
-const saveState = () => localStorage.setItem('cinebookState', JSON.stringify(state));
+const saveState = () => localStorage.setItem('pixiesparkState', JSON.stringify(state));
 const loadState = () => {
-  const s = localStorage.getItem('cinebookState');
+  const s = localStorage.getItem('pixiesparkState');
   if (s) state = JSON.parse(s);
 };
 
@@ -39,7 +39,7 @@ const authHeader = () => ({
 const setTheme = theme => {
   document.documentElement.setAttribute('data-theme', theme);
   state.theme = theme;
-  localStorage.setItem('cinebook-theme', theme);
+  localStorage.setItem('pixiespark-theme', theme);
   saveState();
   updateThemeIcons(theme);
 };
@@ -49,11 +49,15 @@ const updateThemeIcons = theme => {
   document.querySelectorAll('.moon-icon').forEach(i => i.style.display = theme === 'dark' ? 'none' : 'block');
 };
 
+// Only one background video available (bg.mp4.mp4), no source change needed on theme toggle
 const updateThemeVideo = (theme) => {
   const video = document.getElementById('themeVideo');
   if (video) {
     const source = theme === 'dark' ? 'images/dark2.mp4' : 'images/light.mp4';
-    if (!video.src.includes(source)) { video.src = source; video.load(); }
+    if (!video.src.includes(source)) {
+      video.src = source;
+      video.load();
+    }
   }
 };
 
@@ -67,7 +71,7 @@ const toggleTheme = () => {
 
 const initTheme = () => {
   document.body.classList.add('no-transition');
-  const theme = localStorage.getItem('cinebook-theme') || state.theme || 'light';
+  const theme = localStorage.getItem('pixiespark-theme') || state.theme || 'light';
   setTheme(theme);
   updateThemeVideo(theme);
   requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.remove('no-transition')));
@@ -203,8 +207,6 @@ async function fetchMovies() {
   }
 }
 
-}
-
 function renderMovies(moviesToRender = movies) {
   const grid = document.getElementById('moviesGrid');
   if (!grid) return;
@@ -262,7 +264,7 @@ window.selectMovie = async (movieId) => {
       return;
     }
 
-    // Use the first available show (you can add show selection UI later)
+    // Use the first available show
     const show = shows[0];
     state.selectedMovie = movie;
     state.selectedShow = show;
@@ -354,7 +356,7 @@ window.deleteMovie = async (movieId) => {
 
 // ========== SEATS PAGE ==========
 // Function to initialize the seats selection page
-// Checks login and movie selection, renders seats, sets up booking
+// Checks login and movie selection, renders seats, sets up real-time refresh
 async function initSeatsPage() {
   if (!state.isLoggedIn || !state.selectedMovie) return window.location.href = 'movies.html';
 
@@ -376,6 +378,7 @@ async function initSeatsPage() {
 }
 
 // Fetch latest booked seats from backend and re-render
+// This is the key function that prevents double booking by always checking the DB
 async function refreshBookedSeats() {
   try {
     const showId = state.selectedShow._id || state.selectedShow.id;
@@ -533,6 +536,7 @@ function initTicketPage() {
 }
 
 // Function to generate and display the ticket after successful booking
+// Makes a POST request to backend to save the booking atomically
 async function generateTicket() {
   const movie = state.selectedMovie;
   const seats = state.selectedSeats;
@@ -650,7 +654,7 @@ async function initDashboardPage() {
     const response = await fetch(`${API_BASE}/bookings`, { headers: authHeader() });
     if (response.ok) {
       const backendBookings = await response.json();
-      // Merge with local state for display
+      // Map backend booking data to frontend format for display
       state.bookings = backendBookings.map(b => ({
         id: b._id,
         movie: { title: b.movieId?.title || 'Unknown', poster: b.movieId?.poster || '' },

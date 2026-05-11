@@ -1,12 +1,16 @@
+<!-- admin.html - Admin dashboard page for movie management -->
+<!-- Purpose: Allows admin users to add new movies to the database and manage existing movies -->
+<!-- Features: Movie upload form with image handling, movie management list with delete functionality -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - CineBook</title>
+  <title>Admin Dashboard - PixieSpark</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    /* Custom styles for admin form and messages */
     .admin-container {
       max-width: 800px;
       margin: 2rem auto;
@@ -66,19 +70,20 @@
 </head>
 
 <body>
+  <!-- Global video background -->
   <div class="global-video-bg">
     <video autoplay muted loop playsinline id="themeVideo">
       <source src="images/light.mp4" type="video/mp4">
     </video>
   </div>
-  <!-- Navigation -->
+  <!-- Navigation bar for admin -->
   <nav class="navbar">
     <a href="movies.html" class="navbar-brand">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path
           d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
       </svg>
-      <span>CineBook Admin</span>
+      <span>PixieSpark Admin</span>
     </a>
 
     <div class="navbar-nav">
@@ -87,28 +92,35 @@
     </div>
   </nav>
 
-  <!-- Admin Page -->
+  <!-- Main admin page content -->
   <main class="movies-page">
+    <!-- Header for movie upload section -->
     <div class="movies-header">
       <h1 class="movies-title">Upload New Movie</h1>
       <p class="movies-subtitle">Add movies to the database dynamically</p>
     </div>
 
+    <!-- Admin container with movie upload form -->
     <div class="admin-container fade-in">
+      <!-- Status message display area -->
       <div id="statusMessage" class="message"></div>
 
+      <!-- Movie upload form -->
       <form id="addMovieForm" class="admin-form">
+        <!-- Movie title input -->
         <div class="form-group">
           <label class="form-label" for="title">Movie Title</label>
           <input type="text" id="title" class="form-input" required placeholder="e.g., The Matrix">
         </div>
 
+        <!-- Movie description textarea -->
         <div class="form-group">
           <label class="form-label" for="description">Description</label>
           <textarea id="description" class="form-input" required rows="3"
             placeholder="Enter movie description..."></textarea>
         </div>
 
+        <!-- Genre and language inputs in grid -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="form-group">
             <label class="form-label" for="genre">Genre (comma separated)</label>
@@ -121,6 +133,7 @@
           </div>
         </div>
 
+        <!-- Duration, rating, price, and release date in grid -->
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
           <div class="form-group">
             <label class="form-label" for="duration">Duration (mins)</label>
@@ -144,16 +157,19 @@
           </div>
         </div>
 
+        <!-- Poster URL input (optional) -->
         <div class="form-group">
           <label class="form-label" for="posterUrl">Poster Image URL (Optional)</label>
           <input type="url" id="posterUrl" class="form-input" placeholder="https://example.com/poster.jpg">
         </div>
 
+        <!-- Local image upload input -->
         <div class="form-group">
           <label class="form-label" for="image">OR Upload Local Poster</label>
           <input type="file" id="image" class="form-input" accept="image/*">
         </div>
 
+        <!-- Submit button -->
         <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 1rem;"
           id="submitBtn">
           Save Movie to Database
@@ -161,11 +177,13 @@
       </form>
     </div>
 
+    <!-- Header for movie management section -->
     <div class="movies-header" style="margin-top: 4rem;">
       <h2 class="movies-title">Manage Movies</h2>
       <p class="movies-subtitle">View and delete existing movies from the database</p>
     </div>
 
+    <!-- Container for movie management list -->
     <div class="admin-container fade-in">
       <div id="adminMoviesList" style="display: flex; flex-direction: column; gap: 1rem;">
         <p style="color: var(--text-secondary); text-align: center;">Loading movies...</p>
@@ -173,24 +191,25 @@
     </div>
   </main>
 
-  <!-- Script to handle form submission -->
+  <!-- Inline script for form submission handling -->
   <script>
+    // Event listener for movie upload form submission
     document.getElementById('addMovieForm').addEventListener('submit', async (e) => {
-      e.preventDefault(); // Prevent page reload
+      e.preventDefault(); // Prevent default form submission behavior
 
       const submitBtn = document.getElementById('submitBtn');
       const statusMsg = document.getElementById('statusMessage');
 
-      // Show loading state
+      // Set loading state on submit button
       submitBtn.textContent = 'Uploading...';
       submitBtn.disabled = true;
       statusMsg.style.display = 'none';
 
-      // Gather form data
+      // Collect form data from inputs
       const title = document.getElementById('title').value;
       const description = document.getElementById('description').value;
       const genreInput = document.getElementById('genre').value;
-      const genre = genreInput.split(',').map(g => g.trim()); // Convert to array
+      const genre = genreInput.split(',').map(g => g.trim()); // Split comma-separated genres into array
       const language = document.getElementById('language').value;
       const duration = Number(document.getElementById('duration').value);
       const rating = Number(document.getElementById('rating').value);
@@ -201,6 +220,7 @@
 
       let finalPosterUrl = posterUrlInput;
 
+      // Validate that either URL or file is provided
       if (!imageFile && !posterUrlInput) {
         statusMsg.textContent = '❌ Please provide either an image URL or upload a file.';
         statusMsg.className = 'message error';
@@ -210,19 +230,20 @@
         return;
       }
 
-      // Upload image first
+      // Handle image upload if file is selected
       if (imageFile) {
         const formData = new FormData();
         formData.append('image', imageFile);
 
         try {
+          // Upload image to server
           const uploadRes = await fetch('http://localhost:5000/api/upload', {
             method: 'POST',
             body: formData,
           });
           const uploadData = await uploadRes.json();
           if (uploadRes.ok) {
-            finalPosterUrl = uploadData.image;
+            finalPosterUrl = uploadData.image; // Use uploaded image URL
           } else {
             throw new Error(uploadData.message || 'Image upload failed');
           }
@@ -237,7 +258,7 @@
         }
       }
 
-      // Prepare payload
+      // Prepare movie data payload
       const movieData = {
         title,
         description,
@@ -250,9 +271,9 @@
         poster: finalPosterUrl
       };
 
-      // Retrieve state for JWT token
+      // Get JWT token from localStorage state
       let token = '';
-      const stateStr = localStorage.getItem('cinebookState');
+      const stateStr = localStorage.getItem('pixiesparkState');
       if (stateStr) {
         const parsedState = JSON.parse(stateStr);
         if (parsedState && parsedState.user && parsedState.user.token) {
@@ -261,7 +282,7 @@
       }
 
       try {
-        // Send to backend API
+        // Send movie data to backend API
         const response = await fetch('http://localhost:5000/api/movies', {
           method: 'POST',
           headers: {
@@ -274,41 +295,42 @@
         const data = await response.json();
 
         if (response.ok) {
-          // Success
+          // Success handling
           statusMsg.textContent = '✅ Movie successfully added to the database!';
           statusMsg.className = 'message success';
           statusMsg.style.display = 'block';
 
-          // Clear the form
+          // Reset form after successful submission
           document.getElementById('addMovieForm').reset();
 
-          // Refresh the manage movies list automatically
+          // Refresh movie lists if functions are available
           if (typeof fetchMovies === 'function') {
             await fetchMovies();
             if (typeof renderAdminMovies === 'function') renderAdminMovies();
           }
         } else {
-          // Backend returned an error
+          // Handle backend error response
           throw new Error(data.message || 'Failed to upload movie');
         }
       } catch (error) {
-        // Network error or thrown error
+        // Handle network or other errors
         console.error('Upload Error:', error);
         statusMsg.textContent = '❌ ' + error.message;
         statusMsg.className = 'message error';
         statusMsg.style.display = 'block';
       } finally {
-        // Re-enable button
+        // Reset button state
         submitBtn.textContent = 'Save Movie to Database';
         submitBtn.disabled = false;
 
-        // Hide message after 5 seconds
+        // Auto-hide status message after 5 seconds
         setTimeout(() => {
           statusMsg.style.display = 'none';
         }, 5000);
       }
     });
   </script>
+  <!-- Load main JavaScript file -->
   <script src="script.js"></script>
 </body>
 

@@ -1,14 +1,18 @@
+<!-- ticket.html - Final booking confirmation and ticket display page -->
+<!-- Purpose: Shows successful booking confirmation with animated ticket, confetti celebration, and booking details -->
+<!-- Features: Premium ticket design with perforated separator, barcode, payment confirmation, celebration animations -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booking Confirmed - CineBook</title>
+  <title>Booking Confirmed - PixieSpark</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <!-- Global video background that changes with theme -->
   <div class="global-video-bg">
     <video autoplay muted loop playsinline id="themeVideo">
       <source src="images/light.mp4" type="video/mp4">
@@ -16,14 +20,14 @@
     <div class="video-overlay"></div>
   </div>
 
-  <!-- Navigation -->
+  <!-- Navigation bar -->
   <nav class="navbar">
     <a href="movies.html" class="navbar-brand">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path
           d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
       </svg>
-      <span>CineBook</span>
+      <span>PixieSpark</span>
     </a>
 
     <div class="navbar-nav">
@@ -32,6 +36,7 @@
     </div>
 
     <div class="navbar-right">
+      <!-- Theme toggle button -->
       <button class="theme-toggle" id="themeToggle" title="Toggle theme">
         <svg class="sun-icon" viewBox="0 0 24 24">
           <path
@@ -43,6 +48,7 @@
         </svg>
       </button>
 
+      <!-- User profile dropdown -->
       <div class="profile-container">
         <button class="profile-btn" id="profileBtn">
           <svg viewBox="0 0 24 24">
@@ -77,9 +83,10 @@
     </div>
   </nav>
 
-  <!-- Ticket Page -->
+  <!-- Main ticket page content -->
   <main class="ticket-page">
     <div class="ticket-container fade-in">
+      <!-- Success confirmation section with animated checkmark -->
       <div class="ticket-success">
         <div class="success-icon pulse-animation">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
@@ -91,15 +98,16 @@
         <p style="color: var(--text-secondary); margin-top: 0.5rem;">We've successfully processed your payment.</p>
       </div>
 
+      <!-- Premium ticket design with physical ticket appearance -->
       <div class="premium-ticket slide-up-animation">
-        <!-- Top part of ticket -->
+        <!-- Top part of ticket with movie and show details -->
         <div class="ticket-top">
           <div class="ticket-brand">
             <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px; margin-right: 8px;">
               <path
                 d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
             </svg>
-            CINEBOOK EXCLUSIVE
+            PIXIESPARK EXCLUSIVE
           </div>
           <h3 class="ticket-movie-title" id="ticketMovie">Loading...</h3>
           <div class="ticket-meta-grid">
@@ -122,14 +130,14 @@
           </div>
         </div>
 
-        <!-- Perforated separator line -->
+        <!-- Perforated separator line to mimic physical ticket -->
         <div class="ticket-separator">
           <div class="cutout-left"></div>
           <div class="dashed-line"></div>
           <div class="cutout-right"></div>
         </div>
 
-        <!-- Bottom part of ticket -->
+        <!-- Bottom part of ticket with payment and barcode -->
         <div class="ticket-bottom">
           <div class="payment-info">
             <span class="meta-label">Total Amount Paid</span>
@@ -142,16 +150,19 @@
         </div>
       </div>
 
+      <!-- Action buttons for next steps -->
       <div class="ticket-actions slide-up-animation" style="animation-delay: 0.2s;">
         <a href="dashboard.html" class="btn btn-secondary">View Bookings</a>
         <a href="movies.html" class="btn btn-primary">Book Another</a>
       </div>
     </div>
 
+    <!-- Canvas for confetti animation celebration -->
     <canvas id="confettiCanvas"
       style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
   </main>
 
+  <!-- Load main JavaScript for ticket functionality and confetti -->
   <script src="script.js"></script>
 </body>
 

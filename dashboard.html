@@ -1,28 +1,32 @@
+<!-- dashboard.html - User dashboard page showing profile info, booking statistics, and recent bookings -->
+<!-- Purpose: Personal dashboard for logged-in users to view their profile, booking history, and statistics -->
+<!-- Features: User profile display, booking stats (total bookings/spent), recent bookings list with movie details -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - CineBook</title>
+  <title>Dashboard - PixieSpark</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <!-- Global video background that changes with theme -->
   <div class="global-video-bg">
     <video autoplay muted loop playsinline id="themeVideo">
       <source src="images/light.mp4" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
   </div>
-  <!-- Navigation -->
+  <!-- Navigation bar -->
   <nav class="navbar">
     <a href="movies.html" class="navbar-brand">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path
           d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
       </svg>
-      <span>CineBook</span>
+      <span>lalaland</span>
     </a>
 
     <div class="navbar-nav">
@@ -31,6 +35,7 @@
     </div>
 
     <div class="navbar-right">
+      <!-- Theme toggle button -->
       <button class="theme-toggle" id="themeToggle" title="Toggle theme">
         <svg class="sun-icon" viewBox="0 0 24 24">
           <path
@@ -42,6 +47,7 @@
         </svg>
       </button>
 
+      <!-- User profile dropdown -->
       <div class="profile-container">
         <button class="profile-btn" id="profileBtn">
           <svg viewBox="0 0 24 24">
@@ -76,16 +82,18 @@
     </div>
   </nav>
 
-  <!-- Dashboard Page -->
+  <!-- Main dashboard page content -->
   <main class="dashboard-page">
     <div class="dashboard-container">
+      <!-- Dashboard header with personalized welcome -->
       <div class="dashboard-header">
         <h1 class="dashboard-title">My Dashboard</h1>
         <p class="dashboard-welcome" id="userWelcome">Welcome back!</p>
       </div>
 
+      <!-- Dashboard grid with profile and stats cards -->
       <div class="dashboard-grid">
-        <!-- User Info Card -->
+        <!-- User profile information card -->
         <div class="dashboard-card">
           <div class="dashboard-card-header">
             <h3 class="dashboard-card-title">Profile Information</h3>
@@ -104,7 +112,7 @@
           </div>
         </div>
 
-        <!-- Stats Card -->
+        <!-- Booking statistics card -->
         <div class="dashboard-card">
           <div class="dashboard-card-header">
             <h3 class="dashboard-card-title">Booking Stats</h3>
@@ -122,7 +130,7 @@
         </div>
       </div>
 
-      <!-- Recent Bookings -->
+      <!-- Recent bookings list section -->
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h3 class="dashboard-card-title">Recent Bookings</h3>
@@ -137,6 +145,7 @@
     </div>
   </main>
 
+  <!-- Load main JavaScript for dashboard functionality -->
   <script src="script.js"></script>
 </body>
 

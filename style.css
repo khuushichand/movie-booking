@@ -1,6 +1,13 @@
 /* ============================================
    MOVIE BOOKING WEBSITE - STYLESHEET
-   ============================================ */
+   ============================================
+   Purpose: Complete CSS styling for PixieSpark movie booking application
+   Features: Dual theme system (light/dark), responsive design, holographic UI elements,
+            glassmorphism effects, ambient background system, premium animations
+   Technologies: CSS Variables, Flexbox/Grid, CSS Animations, Media Queries
+   Sections: Theme variables, Navigation, Buttons, Forms, Page-specific styles,
+            Animations, Responsive design, Admin UI, Premium ticket UI
+*/
 
 /* CSS Variables - Theme System */
 :root {
@@ -64,7 +71,7 @@
   --glow-primary: rgba(255, 0, 0, 0.28);
   --glow-secondary: rgba(229, 9, 20, 0.18);
   --glow-accent: rgba(10, 10, 20, 0.25);
-  
+
   /* Dark Premium Frosted UI */
   --bg-card-glass: rgba(0, 0, 0, 0.35);
   --border-glass: rgba(255, 255, 255, 0.15);
@@ -298,7 +305,7 @@ p {
 .nav-link::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: 0; /* Modern shorthand for top/right/bottom/left: 0 */
   background: var(--bg-secondary);
   border-radius: 50px;
   z-index: -1;
@@ -323,7 +330,7 @@ p {
 }
 
 .nav-link.active::before {
-  display: none;
+  display: none; /* Hide background effect for active state */
 }
 
 .nav-link.active:hover {
@@ -372,9 +379,9 @@ p {
     padding: 1.5rem;
     border-radius: 16px;
     box-shadow: 0 16px 68px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
+    opacity: 0; /* Hidden by default on mobile */
+    visibility: hidden; /* Completely hidden, not just transparent */
+    transform: translateY(-10px); /* Slide up animation */
     transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     border: 1px solid var(--border-color);
   }
@@ -387,7 +394,7 @@ p {
   .navbar-nav.mobile-open {
     opacity: 1;
     visibility: visible;
-    transform: translateY(15px);
+    transform: translateY(15px); /* Slide down when opened */
   }
 
   .navbar-nav .nav-link {
@@ -1123,8 +1130,8 @@ body.no-transition * {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
   transition: transform 0.15s ease-out;
-  transform-style: preserve-3d;
-  will-change: transform;
+  transform-style: preserve-3d; /* Preserve 3D transformations for depth effects */
+  will-change: transform; /* Optimize for animations */
 }
 
 [data-theme="dark"] .holographic-card {
@@ -1140,12 +1147,12 @@ body.no-transition * {
 .holographic-card::before {
   content: '';
   position: absolute;
-  top: var(--mouse-y, 0);
+  top: var(--mouse-y, 0); /* CSS custom properties updated by JavaScript */
   left: var(--mouse-x, 0);
   width: 600px;
   height: 600px;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); /* Center the radial gradient on mouse position */
   pointer-events: none;
   z-index: -1;
   opacity: 0;
@@ -1157,7 +1164,7 @@ body.no-transition * {
 }
 
 .holographic-card:hover::before {
-  opacity: 1;
+  opacity: 1; /* Show spotlight effect on hover */
 }
 
 .seats-container {
