@@ -18,13 +18,13 @@ const getBookings = asyncHandler(async (req, res) => {
     // Admins can see all bookings with user info
     bookings = await Booking.find().populate({
       path: 'userId movieId theatreId showId',
-      select: 'name email title date time',
+      select: 'name email title poster date time',
     });
   } else {
     // Regular users only see their own bookings
     bookings = await Booking.find({ userId: req.user._id }).populate({
       path: 'movieId theatreId showId',
-      select: 'title name date time',
+      select: 'title poster name date time',
     });
   }
   res.status(200).json(bookings);
@@ -96,7 +96,7 @@ const createBooking = asyncHandler(async (req, res) => {
 const getBooking = asyncHandler(async (req, res) => {
   const booking = await Booking.findById(req.params.id).populate({
     path: 'movieId theatreId showId',
-    select: 'title name date time',
+    select: 'title poster name date time',
   });
 
   if (!booking) {

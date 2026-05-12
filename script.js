@@ -657,7 +657,14 @@ async function initDashboardPage() {
       // Map backend booking data to frontend format for display
       state.bookings = backendBookings.map(b => ({
         id: b._id,
-        movie: { title: b.movieId?.title || 'Unknown', poster: b.movieId?.poster || '' },
+        movie: { 
+        title: b.movieId?.title || 'Unknown', 
+        poster: b.movieId?.poster 
+        ? (b.movieId.poster.startsWith('/') 
+        ? `http://localhost:5000${b.movieId.poster}` 
+        : b.movieId.poster) 
+        : '' 
+        },
         seats: b.seats,
         date: b.showId?.date ? new Date(b.showId.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) : '-',
         time: b.showId?.time || '-',
